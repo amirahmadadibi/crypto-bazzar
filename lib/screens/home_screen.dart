@@ -23,14 +23,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          backgroundColor: Colors.grey[800],
-          body: SafeArea(
-              child: Center(
-            child: SpinKitSquareCircle(
+        backgroundColor: Colors.grey[800],
+        body: SafeArea(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(image: AssetImage('assets/images/logo.png')),
+            SpinKitWave(
               color: Colors.white,
-              size: 80.0,
+              size: 30.0,
             ),
-          ))),
+          ],
+        )),
+      ),
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/data/constant/constants.dart';
 import 'package:flutter_application_1/data/model/crypto.dart';
 
 class CoinListScreen extends StatefulWidget {
@@ -70,12 +71,12 @@ class _CoinListScreenState extends State<CoinListScreen> {
         ? Icon(
             Icons.trending_down,
             size: 24,
-            color: Colors.red,
+            color: redColor,
           )
         : Icon(
             Icons.trending_up,
             size: 24,
-            color: Colors.green,
+            color: greenColor,
           );
   }
 }
