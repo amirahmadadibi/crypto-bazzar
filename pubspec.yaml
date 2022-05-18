@@ -77,7 +77,7 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: morbaee
+    - family: mr
       fonts:
         - asset: fonts/mh.ttf
   #       - asset: fonts/Schyler-Italic.ttf

@@ -21,49 +21,74 @@ class _CoinListScreenState extends State<CoinListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: blackColor,
+        appBar: AppBar(
+          backgroundColor: blackColor,
+          title: Text(
+            'کیریپتو بازار',
+            style: TextStyle(fontFamily: 'mr'),
+          ),
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+        ),
         body: SafeArea(
-      child: ListView.builder(
-        itemCount: cryptoList!.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-              title: Text(cryptoList![index].name),
-              subtitle: Text(cryptoList![index].symbol),
-              leading: SizedBox(
-                width: 30.0,
-                child: Center(
-                  child: Text(
-                    cryptoList![index].rank.toString(),
+          child: ListView.builder(
+            itemCount: cryptoList!.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                  title: Text(
+                    cryptoList![index].name,
+                    style: TextStyle(color: greenColor),
                   ),
-                ),
-              ),
-              trailing: SizedBox(
-                width: 150,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  subtitle: Text(
+                    cryptoList![index].symbol,
+                    style: TextStyle(color: greyColor),
+                  ),
+                  leading: SizedBox(
+                    width: 30.0,
+                    child: Center(
+                      child: Text(
+                        cryptoList![index].rank.toString(),
+                        style: TextStyle(color: greyColor),
+                      ),
+                    ),
+                  ),
+                  trailing: SizedBox(
+                    width: 150,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          cryptoList![index].priceUsd.toStringAsFixed(2),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              cryptoList![index].priceUsd.toStringAsFixed(2),
+                              style: TextStyle(color: greyColor, fontSize: 18),
+                            ),
+                            Text(
+                              cryptoList![index]
+                                  .changePercent24hr
+                                  .toStringAsFixed(2),
+                              style: TextStyle(
+                                color: _getColorChnageText(
+                                    cryptoList![index].changePercent24hr),
+                              ),
+                            )
+                          ],
                         ),
-                        Text(cryptoList![index]
-                            .changePercent24hr
-                            .toStringAsFixed(2))
+                        SizedBox(
+                            width: 50,
+                            child: Center(
+                              child: _getIconChangePercent(
+                                  cryptoList![index].changePercent24hr),
+                            )),
                       ],
                     ),
-                    SizedBox(
-                        width: 50,
-                        child: Center(
-                          child: _getIconChangePercent(
-                              cryptoList![index].changePercent24hr),
-                        )),
-                  ],
-                ),
-              ));
-        },
-      ),
-    ));
+                  ));
+            },
+          ),
+        ));
   }
 
   Widget _getIconChangePercent(double percentChange) {
@@ -78,5 +103,9 @@ class _CoinListScreenState extends State<CoinListScreen> {
             size: 24,
             color: greenColor,
           );
+  }
+
+  Color _getColorChnageText(double percentChange) {
+    return percentChange <= 0 ? redColor : greenColor;
   }
 }
