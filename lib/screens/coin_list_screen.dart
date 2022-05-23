@@ -34,6 +34,8 @@ class _CoinListScreenState extends State<CoinListScreen> {
         ),
         body: SafeArea(
             child: RefreshIndicator(
+          backgroundColor: greenColor,
+          color: blackColor,
           onRefresh: () async {
             List<Crypto> fereshData = await _getData();
             setState(() {
