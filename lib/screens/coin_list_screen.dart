@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/constant/constants.dart';
 import 'package:flutter_application_1/data/model/crypto.dart';
@@ -32,13 +33,20 @@ class _CoinListScreenState extends State<CoinListScreen> {
           automaticallyImplyLeading: false,
         ),
         body: SafeArea(
+            child: RefreshIndicator(
+          onRefresh: () async {
+            List<Crypto> fereshData = await _getData();
+            setState(() {
+              cryptoList = fereshData;
+            });
+          },
           child: ListView.builder(
             itemCount: cryptoList!.length,
             itemBuilder: (context, index) {
               return _getListTileItem(cryptoList![index]);
             },
           ),
-        ));
+        )));
   }
 
   Widget _getListTileItem(Crypto crypto) {
@@ -108,5 +116,13 @@ class _CoinListScreenState extends State<CoinListScreen> {
 
   Color _getColorChnageText(double percentChange) {
     return percentChange <= 0 ? redColor : greenColor;
+  }
+
+  Future<List<Crypto>> _getData() async {
+    var response = await Dio().get('https://api.coincap.io/v2/assets');
+    List<Crypto> cryptoList = response.data['data']
+        .map<Crypto>((jsonMapObject) => Crypto.fromMapJson(jsonMapObject))
+        .toList();
+    return cryptoList;
   }
 }
