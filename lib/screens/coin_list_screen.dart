@@ -40,6 +40,9 @@ class _CoinListScreenState extends State<CoinListScreen> {
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: TextField(
+                onChanged: (value) {
+                  _fiterList(value);
+                },
                 decoration: InputDecoration(
                     hintText: 'اسم رمزارز معتبر را سرچ کنید',
                     hintStyle: TextStyle(fontFamily: 'mr', color: Colors.white),
@@ -150,5 +153,17 @@ class _CoinListScreenState extends State<CoinListScreen> {
         .map<Crypto>((jsonMapObject) => Crypto.fromMapJson(jsonMapObject))
         .toList();
     return cryptoList;
+  }
+
+  void _fiterList(String enteredKeyword) {
+    List<Crypto> cryptoResultList = [];
+
+    cryptoResultList = cryptoList!.where((element) {
+      return element.name.toLowerCase().contains(enteredKeyword.toLowerCase());
+    }).toList();
+
+    setState(() {
+      cryptoList = cryptoResultList;
+    });
   }
 }
