@@ -22,33 +22,57 @@ class _CoinListScreenState extends State<CoinListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: blackColor,
+      appBar: AppBar(
         backgroundColor: blackColor,
-        appBar: AppBar(
-          backgroundColor: blackColor,
-          title: Text(
-            'کیریپتو بازار',
-            style: TextStyle(fontFamily: 'mr'),
-          ),
-          centerTitle: true,
-          automaticallyImplyLeading: false,
+        title: Text(
+          'کیریپتو بازار',
+          style: TextStyle(fontFamily: 'mr'),
         ),
-        body: SafeArea(
-            child: RefreshIndicator(
-          backgroundColor: greenColor,
-          color: blackColor,
-          onRefresh: () async {
-            List<Crypto> fereshData = await _getData();
-            setState(() {
-              cryptoList = fereshData;
-            });
-          },
-          child: ListView.builder(
-            itemCount: cryptoList!.length,
-            itemBuilder: (context, index) {
-              return _getListTileItem(cryptoList![index]);
-            },
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+      ),
+      body: SafeArea(
+          child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: TextField(
+                decoration: InputDecoration(
+                    hintText: 'اسم رمزارز معتبر را سرچ کنید',
+                    hintStyle: TextStyle(fontFamily: 'mr', color: Colors.white),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(width: 0, style: BorderStyle.none),
+                    ),
+                    filled: true,
+                    fillColor: greenColor),
+              ),
+            ),
           ),
-        )));
+          Expanded(
+            child: RefreshIndicator(
+              backgroundColor: greenColor,
+              color: blackColor,
+              onRefresh: () async {
+                List<Crypto> fereshData = await _getData();
+                setState(() {
+                  cryptoList = fereshData;
+                });
+              },
+              child: ListView.builder(
+                itemCount: cryptoList!.length,
+                itemBuilder: (context, index) {
+                  return _getListTileItem(cryptoList![index]);
+                },
+              ),
+            ),
+          )
+        ],
+      )),
+    );
   }
 
   Widget _getListTileItem(Crypto crypto) {
