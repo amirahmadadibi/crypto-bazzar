@@ -80,6 +80,10 @@ flutter:
     - family: mr
       fonts:
         - asset: fonts/mh.ttf
+    - family: iranYekan
+      fonts:
+        - asset: fonts/iyl.ttf
+  
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

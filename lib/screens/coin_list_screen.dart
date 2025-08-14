@@ -27,7 +27,7 @@ class _CoinListScreenState extends State<CoinListScreen> {
         backgroundColor: blackColor,
         title: Text(
           'کیریپتو بازار',
-          style: TextStyle(fontFamily: 'mr'),
+          style: TextStyle(fontFamily: 'mr', color: Colors.white),
         ),
         centerTitle: true,
         automaticallyImplyLeading: false,
@@ -36,22 +36,23 @@ class _CoinListScreenState extends State<CoinListScreen> {
           child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: TextField(
                 onChanged: (value) {
-                  _fiterList(value);
+                  _filterList(value);
                 },
                 decoration: InputDecoration(
-                    hintText: 'اسم رمزارز معتبر را سرچ کنید',
-                    hintStyle: TextStyle(fontFamily: 'mr', color: Colors.white),
+                    hintText: 'اسم رمزارز معتبر را سرچ کنید... ',
+                    hintStyle:
+                        TextStyle(fontFamily: 'iranYekan', color: Colors.white),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(width: 0, style: BorderStyle.none),
                     ),
                     filled: true,
-                    fillColor: greenColor),
+                    fillColor: const Color.fromARGB(255, 26, 182, 135)),
               ),
             ),
           ),
@@ -90,10 +91,12 @@ class _CoinListScreenState extends State<CoinListScreen> {
       title: Text(
         crypto.name,
         style: TextStyle(color: greenColor),
+        overflow: TextOverflow.ellipsis,
       ),
       subtitle: Text(
         crypto.symbol,
         style: TextStyle(color: greyColor),
+        overflow: TextOverflow.ellipsis,
       ),
       leading: SizedBox(
         width: 30.0,
@@ -108,25 +111,32 @@ class _CoinListScreenState extends State<CoinListScreen> {
         width: 150,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  crypto.priceUsd.toStringAsFixed(2),
-                  style: TextStyle(color: greyColor, fontSize: 18),
-                ),
-                Text(
-                  crypto.changePercent24hr.toStringAsFixed(2),
-                  style: TextStyle(
-                    color: _getColorChnageText(crypto.changePercent24hr),
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    crypto.priceUsd.toStringAsFixed(2),
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                )
-              ],
+                  Text(
+                    crypto.changePercent24hr.toStringAsFixed(2),
+                    style: TextStyle(
+                      color: _getColorChangeText(crypto.changePercent24hr),
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  )
+                ],
+              ),
             ),
+            SizedBox(width: 8), // Add some spacing
             SizedBox(
-                width: 50,
+                width: 30, // Reduced width to prevent overflow
                 child: Center(
                   child: _getIconChangePercent(crypto.changePercent24hr),
                 )),
@@ -150,19 +160,20 @@ class _CoinListScreenState extends State<CoinListScreen> {
           );
   }
 
-  Color _getColorChnageText(double percentChange) {
+  Color _getColorChangeText(double percentChange) {
     return percentChange <= 0 ? redColor : greenColor;
   }
 
   Future<List<Crypto>> _getData() async {
-    var response = await Dio().get('https://api.coincap.io/v2/assets');
+    var response = await Dio().get(
+        'https://rest.coincap.io/v3/assets?apiKey=658ec474b1f482e18ab745c9b26c4cb4a9a4f31486679c749c0e65b8d9b1ab25');
     List<Crypto> cryptoList = response.data['data']
         .map<Crypto>((jsonMapObject) => Crypto.fromMapJson(jsonMapObject))
         .toList();
     return cryptoList;
   }
 
-  Future<void> _fiterList(String enteredKeyword) async {
+  Future<void> _filterList(String enteredKeyword) async {
     List<Crypto> cryptoResultList = [];
     if (enteredKeyword.isEmpty) {
       setState(() {
