@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/data/constant/constants.dart';
-import 'package:flutter_application_1/data/model/crypto.dart';
+import 'package:flutter_application_1/constant/constants.dart';
+import 'package:flutter_application_1/domain/entities/crypto.dart';
 
 class CoinListScreen extends StatefulWidget {
   CoinListScreen({Key? key, this.cryptoList}) : super(key: key);
