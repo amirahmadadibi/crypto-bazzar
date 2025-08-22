@@ -1,0 +1,41 @@
+//********upgrade dart version
+  sdk: ">=3.0.0 <4.0.0"
+
+//----------------------------------------------------------------------------------------------------------------------------
+
+//********note for quick lookup
+flutter_bloc: ^9.1.1
+
+//----------------------------------------------------------------------------------------------------------------------------
+//*********sealed class 
+What is a Sealed Class?
+A sealed class is a class that can only be extended by classes defined in the same library/file. The sealed keyword ensures that all possible subtypes are known at compile time.
+
+Key Benefits
+Exhaustive Pattern Matching - The compiler knows all possible subtypes
+Type Safety - Prevents unknown subtypes from being created elsewhere
+Better IDE Support - Auto-completion and warnings for missing cases
+
+String getStateMessage(CoinListState state) {
+  return switch (state) {
+    CoinListInitial() => 'Initializing...',
+    CoinListLoading() => 'Loading coins...',
+    CoinListLoaded(coins: final coins) => 'Loaded ${coins.length} coins',
+    CoinListError(message: final msg) => 'Error: $msg',
+    // No need for default case - compiler knows all possibilities!
+  };
+}
+
+
+//----------------------------------------------------------------------------------------------------------------------------
+
+1 - bloc
+
+2 - repository - datasource
+
+3 - get it 
+
+4 - dto mapper 
+
+5 - use case
+

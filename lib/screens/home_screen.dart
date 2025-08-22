@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/domain/entities/crypto.dart';
-import 'package:flutter_application_1/screens/coin_list_screen.dart';
+import 'package:flutter_application_1/presentaion/coin_list/screens/coin_list_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class HomeScreen extends StatefulWidget {
