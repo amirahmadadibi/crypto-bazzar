@@ -23,4 +23,24 @@ class CoinRemoteDatasource extends CoinDatasource {
       throw Exception('Failed to load coin list');
     }
   }
+  
+  @override
+  Future<List<CryptoEntity>> searchCoinList(String query) async {
+    try {
+      var response = await dioClient.get(
+          'https://rest.coincap.io/v3/assets?apiKey=658ec474b1f482e18ab745c9b26c4cb4a9a4f31486679c749c0e65b8d9b1ab25');
+      List<CryptoDTO> cryptoList = response.data['data']
+          .map<CryptoDTO>(
+              (jsonMapObject) => CryptoDTO.fromMapJson(jsonMapObject))
+          .toList();
+
+      List<CryptoDTO> filteredList = cryptoList.where((element) {
+        return element.name.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+
+      return CryptoMapper.toDomainList(filteredList);
+    } catch (DioError) {
+      throw Exception('Failed to search coin list');
+    }
+  }
 }

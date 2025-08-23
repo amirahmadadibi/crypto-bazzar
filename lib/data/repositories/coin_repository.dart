@@ -9,4 +9,9 @@ class CoinRepository extends CoinListRepository {
   Future<List<CryptoEntity>> getCoinList() {
     return coinDataSource.getCoinList();
   }
+  
+  @override
+  Future<List<CryptoEntity>> searchCoinList(String query) {
+    return coinDataSource.searchCoinList(query);
+  }
 }

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constant/constants.dart';
 import 'package:flutter_application_1/core/di/locator.dart';
@@ -21,7 +20,7 @@ class _CoinListScreenState extends State<CoinListScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        var bloc = CoinListBloc(locator.get());
+        var bloc = CoinListBloc(locator.get(), locator.get());
         bloc.add(LoadInitialCoinsDataEvent());
         return bloc;
       },
