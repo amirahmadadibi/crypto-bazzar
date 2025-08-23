@@ -119,37 +119,6 @@ class _CoinListScreenState extends State<CoinListScreen> {
         return Center(child: Text(state.errorMessage));
     }
   }
-
-  Future<List<Crypto>> _getData() async {
-    var response = await Dio().get(
-        'https://rest.coincap.io/v3/assets?apiKey=658ec474b1f482e18ab745c9b26c4cb4a9a4f31486679c749c0e65b8d9b1ab25');
-    List<Crypto> cryptoList = response.data['data']
-        .map<Crypto>((jsonMapObject) => Crypto.fromMapJson(jsonMapObject))
-        .toList();
-    return cryptoList;
-  }
-
-  Future<void> _filterList(String enteredKeyword) async {
-    List<Crypto> cryptoResultList = [];
-    if (enteredKeyword.isEmpty) {
-      setState(() {
-        isSearchLoadingVisible = true;
-      });
-      var result = await _getData();
-      // setState(() {
-      //   cryptoList = result;
-      //   isSearchLoadingVisible = false;
-      // });
-      return;
-    }
-    // cryptoResultList = cryptoList!.where((element) {
-    //   return element.name.toLowerCase().contains(enteredKeyword.toLowerCase());
-    // }).toList();
-
-    setState(() {
-      // cryptoList = cryptoResultList;
-    });
-  }
 }
 
 class _buildSuccessListWidget extends StatelessWidget {
