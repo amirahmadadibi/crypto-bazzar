@@ -16,7 +16,7 @@ Future<void> setupLocator() async {
   //datasource
 
   locator.registerFactory<CoinDatasource>(
-      () => CoinRemoteDatasource(locator.get()));
+      () => CoinRemoteDatasource(dioClient: locator.get()));
   //repository
   locator
       .registerFactory<CoinListRepository>(() => CoinRepository(locator.get()));

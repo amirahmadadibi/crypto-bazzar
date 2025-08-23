@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constant/constants.dart';
 import 'package:flutter_application_1/domain/entities/crypto.dart';
 
-Widget coinListItem(Crypto crypto) {
+Widget coinListItem(CryptoEntity crypto) {
   return ListTile(
     title: Text(
       crypto.name,

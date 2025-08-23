@@ -126,7 +126,7 @@ class _buildSuccessListWidget extends StatelessWidget {
     required this.cryptoList,
   });
 
-  final List<Crypto>? cryptoList;
+  final List<CryptoEntity>? cryptoList;
 
   @override
   Widget build(BuildContext context) {

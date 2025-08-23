@@ -1,4 +1,4 @@
-class Crypto {
+class CryptoEntity {
   String id;
   String name;
   String symbol;
@@ -7,7 +7,7 @@ class Crypto {
   double marketCapUsd;
   int rank;
 
-  Crypto(
+  CryptoEntity(
     this.id,
     this.name,
     this.symbol,

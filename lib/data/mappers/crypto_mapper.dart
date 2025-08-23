@@ -2,26 +2,8 @@ import 'package:flutter_application_1/data/dtos/crypto_dto.dart';
 import 'package:flutter_application_1/domain/entities/crypto.dart';
 
 class CryptoMapper {
-  String id;
-  String name;
-  String symbol;
-  double changePercent24hr;
-  double priceUsd;
-  double marketCapUsd;
-  int rank;
-
-  CryptoMapper(
-    this.id,
-    this.name,
-    this.symbol,
-    this.changePercent24hr,
-    this.priceUsd,
-    this.marketCapUsd,
-    this.rank,
-  );
-
-  static Crypto toDomain(CryptoDTO cryptoDTO) {
-    return Crypto(
+  static CryptoEntity toDomain(CryptoDTO cryptoDTO) {
+    return CryptoEntity(
       cryptoDTO.id,
       cryptoDTO.name,
       cryptoDTO.symbol,
@@ -30,5 +12,9 @@ class CryptoMapper {
       double.parse(cryptoDTO.marketCapUsd),
       int.parse(cryptoDTO.rank),
     );
+  }
+
+  static List<CryptoEntity> toDomainList(List<CryptoDTO> dtos) {
+    return dtos.map((dto) => toDomain(dto)).toList();
   }
 }

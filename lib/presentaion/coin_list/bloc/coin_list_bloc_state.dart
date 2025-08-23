@@ -6,7 +6,7 @@ sealed class CoinListBlocState {}
 final class CoinListLoadingState extends CoinListBlocState {}
 
 final class CoinListSuccessState extends CoinListBlocState {
-  final List<Crypto> cryptoList;
+  final List<CryptoEntity> cryptoList;
 
   CoinListSuccessState(this.cryptoList);
 }
