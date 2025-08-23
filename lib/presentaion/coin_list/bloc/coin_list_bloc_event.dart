@@ -5,3 +5,9 @@ sealed class CoinListBlocEvent {}
 
 class LoadInitialCoinsDataEvent extends CoinListBlocEvent {}
 class RefreshCoinDataEvent extends CoinListBlocEvent {}
+
+class SearchCoinDataEvent extends CoinListBlocEvent {
+  final String query;
+
+  SearchCoinDataEvent(this.query);
+}

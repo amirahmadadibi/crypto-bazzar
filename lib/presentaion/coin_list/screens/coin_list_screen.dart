@@ -55,7 +55,9 @@ class _CoinListScreenState extends State<CoinListScreen> {
                         textDirection: TextDirection.rtl,
                         child: TextField(
                           onChanged: (value) {
-                            // _filterList(value);
+                            context
+                                .read<CoinListBloc>()
+                                .add(SearchCoinDataEvent(value));
                           },
                           decoration: InputDecoration(
                               hintText: 'اسم رمزارز معتبر را سرچ کنید... ',
