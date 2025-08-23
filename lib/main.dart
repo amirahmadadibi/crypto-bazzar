@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/home_screen.dart';
-import 'package:http/http.dart';
+import 'package:flutter_application_1/presentaion/coin_list/screens/coin_list_screen.dart';
 
 void main() {
   runApp(Application());
@@ -12,7 +11,7 @@ class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      home: CoinListScreen(),
     );
   }
 }

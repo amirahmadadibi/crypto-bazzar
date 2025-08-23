@@ -5,27 +5,25 @@ import 'package:flutter_application_1/domain/entities/crypto.dart';
 import 'package:flutter_application_1/presentaion/coin_list/bloc/coin_list_bloc_bloc.dart';
 import 'package:flutter_application_1/presentaion/coin_list/widgets/coin_list_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CoinListScreen extends StatefulWidget {
-  CoinListScreen({Key? key, this.cryptoList}) : super(key: key);
-  List<Crypto>? cryptoList;
+  CoinListScreen({Key? key}) : super(key: key);
   @override
   _CoinListScreenState createState() => _CoinListScreenState();
 }
 
 class _CoinListScreenState extends State<CoinListScreen> {
-  List<Crypto>? cryptoList;
   bool isSearchLoadingVisible = false;
-  @override
-  void initState() {
-    super.initState();
-    cryptoList = widget.cryptoList;
-  }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CoinListBloc(),
+      create: (context) {
+        var bloc = CoinListBloc();
+        bloc.add(LoadInitialCoinsDataEvent());
+        return bloc;
+      },
       child: BlocConsumer<CoinListBloc, CoinListBlocState>(
         listener: (context, state) {
           if (state is CoinListFailedState) {
@@ -106,7 +104,12 @@ class _CoinListScreenState extends State<CoinListScreen> {
   Widget _buildByState(CoinListBlocState state) {
     switch (state) {
       case CoinListLoadingState():
-        return Center(child: CircularProgressIndicator());
+        return Center(
+          child: SpinKitWave(
+            color: Colors.white,
+            size: 30.0,
+          ),
+        );
       case CoinListSuccessState():
         return _buildSuccessListWidget(cryptoList: state.cryptoList);
       case CoinListFailedState():
@@ -130,18 +133,18 @@ class _CoinListScreenState extends State<CoinListScreen> {
         isSearchLoadingVisible = true;
       });
       var result = await _getData();
-      setState(() {
-        cryptoList = result;
-        isSearchLoadingVisible = false;
-      });
+      // setState(() {
+      //   cryptoList = result;
+      //   isSearchLoadingVisible = false;
+      // });
       return;
     }
-    cryptoResultList = cryptoList!.where((element) {
-      return element.name.toLowerCase().contains(enteredKeyword.toLowerCase());
-    }).toList();
+    // cryptoResultList = cryptoList!.where((element) {
+    //   return element.name.toLowerCase().contains(enteredKeyword.toLowerCase());
+    // }).toList();
 
     setState(() {
-      cryptoList = cryptoResultList;
+      // cryptoList = cryptoResultList;
     });
   }
 }
