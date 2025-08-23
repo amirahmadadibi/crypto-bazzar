@@ -34,7 +34,44 @@ String getStateMessage(CoinListState state) {
 2 - repository - datasource
 
 3 - get it 
-
+   class DioClient {
+  static Dio? _instance;
+  
+  static Dio get instance {
+    _instance ??= _createDio();
+    return _instance!;
+  }
+  
+  static Dio _createDio() {
+    final dio = Dio(BaseOptions(
+      baseUrl: 'https://api.coingecko.com/api/v3',
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+      sendTimeout: const Duration(seconds: 30),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    ));
+    
+    // Add interceptors for logging and error handling
+    dio.interceptors.add(
+      LogInterceptor(
+        requestBody: true,
+        responseBody: true,
+        logPrint: (obj) => print(obj),
+      ),
+    );
+    
+    return dio;
+  }
+  
+  // Method to update base URL if needed
+  static void updateBaseUrl(String newBaseUrl) {
+    _instance?.options.baseUrl = newBaseUrl;
+  }
+} 
+    
 4 - dto mapper 
 
 5 - use case
